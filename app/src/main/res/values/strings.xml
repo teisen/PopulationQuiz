@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Population Quiz</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_game">Sort by Population Density</string>
+    <string name="subtitle_activity_game">Most to least people per area</string>
+    <string name="correct">CORRECT</string>
+    <string name="wrong">WRONG! Try again.</string>
+    <string name="next">Next</string>
+
+</resources>
