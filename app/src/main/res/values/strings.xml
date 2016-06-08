@@ -7,4 +7,8 @@
     <string name="wrong">WRONG! Try again.</string>
     <string name="next">Next</string>
 
+    <!-- AdMob ad unit IDs -->
+    <string name="banner_home_footer">ca-app-pub-6505949409694515/6852837185</string>
+
+
 </resources>
