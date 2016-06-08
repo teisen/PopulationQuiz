@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.teisentraeger.populationquiz.model.Country;
 import com.teisentraeger.populationquiz.persistence.CountriesDataSource;
 import com.woxthebox.draglistview.DragItem;
@@ -34,6 +36,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView mCorrectWrongTextView;
     private FloatingActionButton fab;
     private Button mNextBtn;
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,17 +84,33 @@ public class GameActivity extends AppCompatActivity {
 
                 if (guess > 3) {
                     changeUItoCorrect();
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Action")
+                            .setAction("Correct")
+                            .build());
                 } else {
                     changeUItoWrong();
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Action")
+                            .setAction("Wrong")
+                            .build());
                 }
             }
         });
+
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
 
         mNextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 initView();
                 changeUIToStandard();
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Next")
+                        .build());
             }
         });
 
@@ -231,5 +250,12 @@ public class GameActivity extends AppCompatActivity {
     }
 */
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(LOG_TAG, "Setting screen name: " + LOG_TAG);
+        mTracker.setScreenName("Image~" + LOG_TAG);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
 
 }

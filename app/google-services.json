@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "504483613885",
+    "project_id": "population-quiz"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504483613885:android:062e8a68a2cbbbb6",
+        "android_client_info": {
+          "package_name": "com.teisentraeger.populationquiz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVzpAb3FudwVkD1loKc_gqNn2owvsahHc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-78960308-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2,
+          "test_banner_ad_unit_id": "ca-app-pub-3940256099942544/6300978111",
+          "test_interstitial_ad_unit_id": "ca-app-pub-3940256099942544/1033173712"
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

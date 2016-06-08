@@ -13,12 +13,15 @@ import android.view.MenuItem;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.teisentraeger.populationquiz.persistence.CountriesDataSource;
 import com.teisentraeger.populationquiz.sync.CountriesService;
 
 public class MainActivity extends AppCompatActivity {
     private final static String LOG_TAG = "MainActivity";
     private AdView mAdView;
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isCountriesEmpty()) {
+                if (isCountriesEmpty()) {
                     Snackbar.make(view, "The countries are not retrieved yet, please wait a moment and try again.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } else {
@@ -49,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+
 
     }
 
@@ -109,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
         if (mAdView != null) {
             mAdView.resume();
         }
+        Log.i(LOG_TAG, "Setting screen name: " + LOG_TAG);
+        mTracker.setScreenName("Image~" + LOG_TAG);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

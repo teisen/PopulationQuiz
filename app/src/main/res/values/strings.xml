@@ -9,6 +9,8 @@
 
     <!-- AdMob ad unit IDs -->
     <string name="banner_home_footer">ca-app-pub-6505949409694515/6852837185</string>
+    <string name="map_of_world">Map of the world</string>
+    <string name="flag">Flag</string>
 
 
 </resources>
