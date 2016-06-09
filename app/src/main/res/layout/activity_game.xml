@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.teisentraeger.populationquiz.GameActivity">
+    tools:context="com.teisentraeger.populationquiz.GameActivity"
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +22,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_game" />
+    <include layout="@layout/content_game"
+        android:transitionName="@string/transition_name_circle" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

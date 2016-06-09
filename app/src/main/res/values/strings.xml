@@ -12,5 +12,7 @@
     <string name="map_of_world">Map of the world</string>
     <string name="flag">Flag</string>
 
+    <string name="transition_name_circle">transition:CIRCLE</string>
+
 
 </resources>

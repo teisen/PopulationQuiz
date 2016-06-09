@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -46,9 +49,20 @@ public class MainActivity extends AppCompatActivity {
                 if (isCountriesEmpty()) {
                     Snackbar.make(view, "The countries are not retrieved yet, please wait a moment and try again.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                    syncDataIfEmpty();
                 } else {
                     Intent intent = new Intent(MainActivity.this, GameActivity.class);
-                    startActivity(intent);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            // the context of the activity
+                            MainActivity.this,
+
+                            // For each shared element, add to this method a new Pair item,
+                            // which contains the reference of the view we are transitioning *from*,
+                            // and the value of the transitionName attribute
+                            new Pair<View, String>(view.findViewById(R.id.fab),
+                                    getString(R.string.transition_name_circle))
+                    );
+                    ActivityCompat.startActivity(MainActivity.this, intent, options.toBundle());
                 }
             }
         });
@@ -84,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -96,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

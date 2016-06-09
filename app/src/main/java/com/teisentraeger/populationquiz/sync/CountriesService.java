@@ -17,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +73,11 @@ public class CountriesService extends IntentService {
                 Log.d(LOG_TAG, "onHandleIntent - DB already has countries.");
             }
 
-            } catch (MalformedURLException e1) {
+            }
+        catch(UnknownHostException e0) {
+            Log.e(LOG_TAG, "Could not connect to server. Retry.");
+        }
+        catch (MalformedURLException e1) {
             e1.printStackTrace();
         } catch (ProtocolException e1) {
             e1.printStackTrace();

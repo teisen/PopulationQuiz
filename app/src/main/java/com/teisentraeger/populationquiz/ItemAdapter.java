@@ -56,7 +56,7 @@ public class ItemAdapter extends DragItemAdapter<Pair<Long, Country>, ItemAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        String text = mItemList.get(position).second.name + " " + mItemList.get(position).second.getDensityRounded();
+        String text = mItemList.get(position).second.name;
         holder.mText.setText(text);
 
         holder.itemView.setTag(text);

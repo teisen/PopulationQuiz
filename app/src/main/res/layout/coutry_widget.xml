@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/widget_margin"
+    android:background="#55000000">
+
+    <ImageView
+        android:id="@+id/imageViewFlag"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingEnd="@dimen/widget_padding"
+        android:src="@drawable/germany" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:paddingEnd="@dimen/widget_padding">
+
+       <TextView
+            android:id="@+id/textViewCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_horizontal"
+            android:text="Country"
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textViewCapital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_horizontal"
+            android:text="Capital"
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:textStyle="normal"/>
+
+    </LinearLayout>
+
+    <!-- Too much detail LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/textViewPop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="000"
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textViewArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="000"
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:textStyle="normal"/>
+
+    </LinearLayout -->
+
+    <TextView
+        android:id="@+id/textViewDensity"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:text="000"
+        android:textSize="@dimen/abc_text_size_display_1_material"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/actionButton"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="Refresh"/>
+
+</LinearLayout>

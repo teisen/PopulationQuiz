@@ -58,6 +58,11 @@ public class Country implements Parcelable {
         return df.format(getDensity());
     }
 
+    public String getAreaRounded() {
+        return df.format(area);
+    }
+
+
     public boolean anyValueIsNull () {
         return (name==null || capital==null || region==null || population==null || area==null);
     }
