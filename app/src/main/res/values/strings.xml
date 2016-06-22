@@ -13,6 +13,12 @@
     <string name="flag">Flag</string>
 
     <string name="transition_name_circle">transition:CIRCLE</string>
+    <string name="country">COUNTRY</string>
+    <string name="capital">CAPITAL</string>
+    <string name="pop">POP</string>
+    <string name="zeros">000</string>
+    <string name="refresh">Refresh</string>
+    <string name="ok">OK</string>
 
 
 </resources>

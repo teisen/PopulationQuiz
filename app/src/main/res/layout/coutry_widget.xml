@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/widget_margin"
-    android:background="#55000000">
+    android:background="@color/grey">
 
     <ImageView
         android:id="@+id/imageViewFlag"
@@ -25,8 +25,8 @@
             android:id="@+id/textViewCountry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center_horizontal"
-            android:text="Country"
+            android:layout_gravity="start|center_horizontal"
+            android:text="@string/country"
             android:textSize="@dimen/abc_text_size_large_material"
             android:textStyle="bold"/>
 
@@ -34,38 +34,12 @@
             android:id="@+id/textViewCapital"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center_horizontal"
-            android:text="Capital"
+            android:layout_gravity="start|center_horizontal"
+            android:text="@string/capital"
             android:textSize="@dimen/abc_text_size_large_material"
             android:textStyle="normal"/>
 
     </LinearLayout>
-
-    <!-- Too much detail LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/textViewPop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="000"
-            android:textSize="@dimen/abc_text_size_large_material"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/textViewArea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="000"
-            android:textSize="@dimen/abc_text_size_large_material"
-            android:textStyle="normal"/>
-
-    </LinearLayout -->
 
     <TextView
         android:id="@+id/textViewDensity"
@@ -73,7 +47,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:text="000"
+        android:text="@string/zeros"
         android:textSize="@dimen/abc_text_size_display_1_material"
         android:textStyle="bold"/>
 
@@ -82,6 +56,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Refresh"/>
+        android:text="@string/refresh"
+        android:contentDescription="@string/refresh"/>
 
 </LinearLayout>

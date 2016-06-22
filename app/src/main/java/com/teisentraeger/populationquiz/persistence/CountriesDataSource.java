@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.util.Log;
 
 import com.teisentraeger.populationquiz.model.Country;
@@ -19,6 +20,9 @@ import com.teisentraeger.populationquiz.model.Country;
 public class CountriesDataSource {
 
     private final static String LOG_TAG = "CountriesDataSource";
+    private final Context mContext;
+    CountriesProvider mProvider = new CountriesProvider();
+
 
     // Database fields
     private SQLiteDatabase database;
@@ -28,6 +32,7 @@ public class CountriesDataSource {
 
     public CountriesDataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
+        mContext = context;
     }
 
     public void open() throws SQLException {
@@ -38,7 +43,53 @@ public class CountriesDataSource {
         dbHelper.close();
     }
 
+    public List<Country> getAllCountries() {
+        List<Country> countries = new ArrayList<Country>();
+
+        Uri myUri =  new Uri.Builder().scheme("content")
+                .authority(CountriesProvider.AUTHORITY)
+                .appendPath(CountriesProvider.COUNTRIES_TABLE).build();
+
+        String selection = null;
+        String[] selectionArgs = {""};
+        String sortOrder = null;
+
+        Cursor cursor = mProvider.query(myUri, allColumns, selection, selectionArgs, sortOrder);
+
+        return getCountriesFromCursor(countries, cursor);
+    }
+
+    public List<Country> getMostPopulousCountries(int amount) {
+        List<Country> countries = new ArrayList<Country>();
+
+        Uri myUri =  new Uri.Builder().scheme("content")
+                .authority(CountriesProvider.AUTHORITY)
+                .appendPath(CountriesProvider.COUNTRIES_TABLE).build();
+
+        String selection = ""+amount;
+        String[] selectionArgs = {""};
+        String sortOrder = Country.MAPPING_POPULATION + " DESC";
+
+        Cursor cursor = mProvider.query(myUri, allColumns, selection, selectionArgs, sortOrder);
+
+        return getCountriesFromCursor(countries, cursor);
+    }
+
+    private List<Country> getCountriesFromCursor(List<Country> comments, Cursor cursor) {
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Country country = cursorToCountry(cursor);
+            comments.add(country);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return comments;
+    }
+
+
     public Country createCountry(Country country) {
+       // TODO: this method could be implemented inside the ContentProvider
         if(country.anyValueIsNull()) {
             //Log.d(LOG_TAG, "Not adding Country " + country.name + " to DB, as one of its values is null." + country.toString());
             return null;
@@ -59,40 +110,6 @@ public class CountriesDataSource {
         cursor.close();
         //Log.d(LOG_TAG, "Country " + country.name + " created in DB.");
         return newCountry;
-    }
-
-    public List<Country> getAllCountries() {
-        List<Country> comments = new ArrayList<Country>();
-
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_COUNTRIES,
-                allColumns, null, null, null, null, null);
-
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            Country country = cursorToCountry(cursor);
-            comments.add(country);
-            cursor.moveToNext();
-        }
-        // make sure to close the cursor
-        cursor.close();
-        return comments;
-    }
-
-    public List<Country> getMostPopulousCountries(int amount) {
-        List<Country> comments = new ArrayList<Country>();
-
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_COUNTRIES,
-                allColumns, null, null, null, null, Country.MAPPING_POPULATION + " DESC",""+amount);
-
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            Country country = cursorToCountry(cursor);
-            comments.add(country);
-            cursor.moveToNext();
-        }
-        // make sure to close the cursor
-        cursor.close();
-        return comments;
     }
 
     private Country cursorToCountry(Cursor cursor) {
