@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.Loader;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +19,7 @@ import android.widget.TextView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.teisentraeger.populationquiz.model.Country;
-import com.teisentraeger.populationquiz.persistence.CountriesDataSource;
+import com.teisentraeger.populationquiz.persistence.CountriesLoader;
 import com.woxthebox.draglistview.DragItem;
 import com.woxthebox.draglistview.DragListView;
 
@@ -25,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Country>> {
 
     public static final String LOG_TAG = "GameActivity";
     private ArrayList<Pair<Long, Country>> mItemArray;
@@ -37,6 +39,7 @@ public class GameActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Button mNextBtn;
     private Tracker mTracker;
+    private static final int THE_LOADER = 0x01;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,20 +142,8 @@ public class GameActivity extends AppCompatActivity {
     private void initView() {
         Log.d(LOG_TAG, "initView");
 
-        CountriesDataSource datasource = new CountriesDataSource(this);
-        datasource.open();
-        mAllCountries = new ArrayList<Country>(datasource.getMostPopulousCountries(20));
-        String out = "";
-        for(Country cnt : mAllCountries) {
-            out = out + cnt.getFilename() + "\n";
-        }
-        Log.d(LOG_TAG, out);
-
-        initCurrentCountries();
-
-        initItemArray();
-
-        setupListRecyclerView();
+        getSupportLoaderManager().initLoader(THE_LOADER, null, this).forceLoad();
+        // using Loader to load from the Database see onLoadFinished
     }
 
     private void changeUItoWrong() {
@@ -216,6 +207,36 @@ public class GameActivity extends AppCompatActivity {
         mDragListView.setAdapter(listAdapter, true);
         mDragListView.setCanDragHorizontally(false);
         mDragListView.setCustomDragItem(new MyDragItem(this, R.layout.list_item));
+    }
+
+    @Override
+    public Loader<ArrayList<Country>> onCreateLoader(int id, Bundle args) {
+        Log.d(LOG_TAG, "onCreateLoader");
+        CountriesLoader loader = new CountriesLoader(this);
+        return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Country>> loader, ArrayList<Country> data) {
+        Log.d(LOG_TAG, "onLoadFinished");
+        mAllCountries = data;
+        String out = "";
+        for(Country cnt : mAllCountries) {
+            out = out + cnt.getFilename() + "\n";
+        }
+        Log.d(LOG_TAG, out);
+
+        initCurrentCountries();
+
+        initItemArray();
+
+        setupListRecyclerView();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Country>> loader) {
+        Log.d(LOG_TAG, "onLoaderReset");
+        mCurrentCountries = null;
     }
 
     private static class MyDragItem extends DragItem {
